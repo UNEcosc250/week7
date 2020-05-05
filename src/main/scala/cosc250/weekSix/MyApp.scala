@@ -19,6 +19,8 @@ object MyApp extends App {
   // Create the actor system
   val system = ActorSystem("PingPongSystem")
 
+  println("Created the actor system")
+
   // Create three of your players
   val algernon = system.actorOf(Props[FizzBuzzActor], name = "Algernon")
   val bertie = system.actorOf(Props[FizzBuzzActor], name = "Bertie")
