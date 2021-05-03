@@ -1,21 +1,32 @@
-# Week 7 tutorial
+# FizzBuzz with Actors
 
-This week, there's not (yet) a set of tests.
-Let's put in a slightly higher level mission...
+To give you some sample code for Actors, we're going to play a game of FizzBuzz.
 
-1. If you don't already know it, read up on what the game "FizzBuzz" is
+This is a game often played in primary schools to test division by three and five.
+The players sit in a circle. Play goes around the circle, with each player calling out the next number...
+...but if the number is divisible by 3 and 5 they should say "fizzbuzz" instead of the number. If it's divisible
+by 3 but not 5, they should say "fizz", and if it's divisible by 5 but not 3 they should say "buzz".
 
-2. In `MyApp`, set up a ring of `Terrible` players and start them playing. They will get it all wrong, but won't even know. But they should print it out to the console, so you'll see you have some Actors talking to each other.
+*1, 2, fizz, 4, buzz, fizz, 7, 8, fizz, buzz, 11, fizz, 13, 14, fizzbuzz, etc.*
 
-   Q: If you do this naively (just sending the messages) it's theoretically possible for an actor to be slow responding to the `NextPlayerIs` message, and not actually have set themselves up when the game starts.
-   How could you edit this so it's all still asynchronous, but you can *guaruntee* every player is ready before the game begins?
+In our game, the players are Actors, as is the referee.
+The referee will send a player a `YourTurn` message, and they have to reply (with the number, `Fizz`, `Buzz`, or `FizzBuzz`).
+The referee will broadcast the player's message out to all the other players (so they can keep track of what number the group is up to).
+The referee will also send a `Wrong` message and eliminate any player that gets the reply wrong.
 
-   Hint: Terrible will need to send a message in reply to the NextPlayerIs message, and then `MyApp` might want to use `?` instead of `!` and chain some futures together...
+Play keeps counting even after `Wrong`s.
 
-3. In `Exercise`, write a player who will play the game correctly. Don't worry yet about dealing with the Terrible players who get it wrong, just get your player to give the right next message (and print it out)
+There are two versions of the game. One uses untyped actors (classic actors) and the other uses typed actors.
+For each case:
 
-4. Now get your player to think about the message its received, and to send a Wrong message back to the previous player if they gave the wrong answer.
+1. In `MyApp`, set up a ring of `Terrible` players and start them playing. 
+   They will get it all wrong, but won't even know. 
+   But they should print it out to the console, so you'll see you have some Actors talking to each other.
 
-5. Add a Referee actor. Now, instead of sending a Wrong message back to the previous player, you send it to the Referee, who will check your claim and: if the player did indeed have it wrong, eliminate them from the game; but if it was right, eliminate you from the game.
+2. Write a player who will play the game correctly (implement `FizzBuzzActor`), and set up a ring of them
 
-(For #5, you'll possibly need to edit the Wrong message a little -- the Referee needs to know whose play it was AND who is shouting "Wrong")
+3. Try changing the `Referee`'s code to use the ask pattern `?` instead of `!` for sending out the challenges and 
+   testing the responses
+
+(If you're having trouble working out whether to reply with `Fizz` or `Buzz` for a number, crib from the Referee's
+code for checking the answer.)
