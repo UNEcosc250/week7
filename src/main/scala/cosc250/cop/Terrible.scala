@@ -1,7 +1,7 @@
-package cosc250.weekSix
+package cosc250.cop
 
 import akka.actor.{ActorRef, Actor}
-import cosc250.weekSix.Exercise.{NextPlayerIs, Buzz, FizzBuzz, Fizz}
+import cosc250.cop.Exercise.{NextPlayerIs, Buzz, FizzBuzz, Fizz}
 
 import scala.util.Random
 

@@ -1,10 +1,7 @@
-package cosc250.weekSix
+package cosc250.cop
 
 import akka.actor.{Actor, ActorRef, ActorSystem}
 import akka.stream.ActorMaterializer
-import play.api.libs.json
-import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.ahc.StandaloneAhcWSClient
 
 import scala.concurrent.{Promise, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
