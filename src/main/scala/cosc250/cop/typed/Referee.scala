@@ -52,7 +52,7 @@ def referee(state:RefereeState): Behavior[RefereeHears] = Behaviors.receive {
     }
 
   case (context, PlayerSays(m, player)) =>
-    // Re-broadcast the message
+    // Re-broadcast the message, so that every player hears it
     for p <- state.players do p ! RefereeSays(m, context.self)
 
     // Check if the answer was right
